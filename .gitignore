@@ -132,3 +132,5 @@ dmypy.json
 #Local Folders
 
 /Resources
+
+.DS_Store
