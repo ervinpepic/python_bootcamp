@@ -10,6 +10,7 @@ nr_symbols = int(input(f"How many symbols would you like?\n"))
 nr_numbers = int(input(f"How many numbers would you like?\n"))
 
 password_generator = []
+final_pass = ""
 
 for letter in range(0, nr_letters + 1):
     # letters_array.append(letters[letter])
@@ -29,7 +30,6 @@ for number in range(0, nr_numbers + 1):
 # password_generator = [letters_array, symbols_array, numbers_array]
 random.shuffle(password_generator)
 
-final_pass = ""
 for password in password_generator:
     final_pass += password
 print(final_pass)
