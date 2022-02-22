@@ -1,80 +1,44 @@
 import random
 from xmlrpc.client import boolean
-# from art import logo
-# print(logo)
-print('Welcome to the Number Guessing game \n')
+from art import logo
 
-computer_number = random.randint(1, 100)
-print("I'm thinking about one number between 1 and 100!")
+EASY = 10
+HARD = 5
 
-choose_level = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
-
-
-def guess_checker(user, pc):
-    global game_end
+def guess_checker(user, pc, tryes):
     if user > pc:
         print("Too high")
+        return tryes - 1
     if user < pc:
         print("Too low")
+        return tryes - 1
     if user == pc:
         print("You guess it! Congrats \n End of the Game!")
-        game_end = True
-        return game_end
 
-game_end = False
-easy = 10
-hard = 5
-
-while not game_end:
-    user_number = int(input("Enter your guess: => "))
-
+def answer_check():
+    choose_level = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
     if choose_level == "easy":
-        guess_checker(user_number, computer_number)
-        easy -= 1
-        if not game_end:
-            print(f"You have {easy} try left")
-        if easy == 0:
-            game_end = True
-
+        return EASY
     elif choose_level == "hard":
-        guess_checker(user_number, computer_number)
-        hard -= 1
-        if not game_end:
-            print(f"You have {hard} try left")
-        if hard == 0:
-            print("You lose :(. No guess")
-            game_end = True
-    else:
-        print("Invalid arguments")
+        return HARD
 
+def gameplay(): 
+    print(logo)
+    print('Welcome to the Number Guessing game \n')
+    print("I'm thinking about one number between 1 and 100!")
 
-    # if level == "easy":
-    #     if user_number > computer_number:
-    #         easy -= 1
-    #         print("Too high")
-    #         print(f"You have {easy} try left")
-    #     elif user_number < computer_number:
-    #         easy -= 1
-    #         print("Too low")
-    #         print(f"You have {easy} try left")
-    #     if easy == 0:
-    #         game_end = True
-    #         print("No guess. Game over")
-    #     if user_number == computer_number:
-    #         print("You guess it!")
-    #         game_end = True
-    # if level == "hard":
-    #     if user_number > computer_number:
-    #         hard -= 1
-    #         print("Too high")
-    #         print(f"You have {hard} try left")
-    #     elif user_number < computer_number:
-    #         hard -= 1
-    #         print("Too low")
-    #         print(f"You have {hard} try left")
-    #     if hard == 0:
-    #         game_end = True
-    #         print("No guess. Game over")
-    #     if user_number == computer_number:
-    #         print("You guess it! Congrats!")
-    #         game_end = True
+    computer_number = random.randint(1, 100)
+    trying = answer_check()
+    user_number = 0
+
+    while user_number != computer_number:
+        print(f"You have a {trying} times to guess the number")
+        user_number = int(input("Guess a number => "))
+
+        trying = guess_checker(user_number, computer_number, trying)
+        if trying == 0:
+            print("You don't guess a number. Game over!")
+            return
+        elif user_number != computer_number:
+            print("Guess again")
+gameplay()
