@@ -1,5 +1,4 @@
 # describe the problem
-
 def my_function_with_bug():
     for i in range(1, 20):
         if i == 20:
