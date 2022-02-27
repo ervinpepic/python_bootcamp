@@ -134,3 +134,6 @@ dmypy.json
 /Resources
 
 .DS_Store
+/bin
+bin/
+/day_16/bin/
