@@ -1,5 +1,5 @@
 resources = {
     "water": 300,
-    "milk": 0,
-    "coffee": 100,
+    "milk": 300,
+    "coffee": 300,
 }
