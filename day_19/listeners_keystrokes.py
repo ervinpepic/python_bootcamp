@@ -30,9 +30,6 @@ def clear():
     turtle_1.pendown()
     turtle_1.shape("turtle")
 
-screen.onkeypress(fun=backward_turtle, key='s')
-screen.onkeypress(fun=left_turtle, key='a')
-screen.onkeypress(fun=right_turtle, key='d')
 
 screen.listen()
 screen.onkey(fun=move_turtle, key="w")
