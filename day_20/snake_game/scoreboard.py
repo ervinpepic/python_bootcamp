@@ -1,6 +1,6 @@
 
 from turtle import Turtle
-
+from datetime import datetime
 FONT = (["Arial", 20, "bold"])
 class Score(Turtle):
     def __init__(self):
@@ -24,6 +24,9 @@ class Score(Turtle):
             self.highscore = self.score
         self.score = 0
         self.update_score()
+        date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        with open("snake_score.txt", 'a') as score_save:
+            score_save.write(f"\nHigh score: {self.highscore} on the {date_time}")
     
     def score_increase(self):
         self.score += 1
