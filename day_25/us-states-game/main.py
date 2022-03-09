@@ -18,10 +18,7 @@ while len(countries) < 50:
         title=f"{len(countries)}/50 States correct", prompt="Enter country name? ").title()
     country = data[data.state == answer_state]
     if answer_state == "Exit":
-        left_countries = []
-        for state in states:
-            if state not in countries:
-                left_countries.append(state)
+        left_countries = [state for state in states if state not in countries]
         new_data = pandas.DataFrame(left_countries)
         new_data.to_csv("states_to_learn.csv")
         break
