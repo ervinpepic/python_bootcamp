@@ -14,6 +14,6 @@ with open("Input/Letters/starting_letter.txt") as letter_content:
         name = friends_list[friend_name].strip()
         formated_letter = readed_letter.replace("[name]", f"{name}")
         letter = formated_letter
-        
+
         with open(f"Output/ReadyToSend/letter_for_{friends_list[friend_name]}.txt", 'w') as output_email:
             send_mail = output_email.write(letter)
