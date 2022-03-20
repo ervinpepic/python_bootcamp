@@ -1,16 +1,20 @@
 # OpenWeather API key
 import requests
+import os
 from twilio.rest import Client
 
-api_key = "26a0e9d734bfd8221e9ac4963dec5c72"
+# Open Weather
+open_weather_api_key = os.environ.get("WEATHER_API_KEY")
 weather_endpoint = "https://api.openweathermap.org/data/2.5/onecall"
-account_sid = "AC31e5dc9007cd12574bc6a1905ae2a514"
-auth_token = "c55a0fce23364e86d1d56b4a93f8254d"
+
+# Twilio
+account_sid = os.environ.get("TWILIO_SID")
+auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
 
 params = {
     "lat": 51.759048,
     "lon": 19.458599,
-    "appid": api_key,
+    "appid": open_weather_api_key,
     "exclude": "current,minutely,daily,alerts"
 }
 
@@ -29,8 +33,8 @@ if rain:
     client = Client(account_sid, auth_token)
     message = client.messages.create(
         body="Bring un umbrella! It will be rainy...", 
-        from_="number_choosen",
-        to="your_verified_nuber"
+        from_=os.environ.get("TWILIO_FROM_NUMBER"),
+        to=os.environ.get("TWILIO_TO_NUMBER")
         )
     print(message.status)
 
