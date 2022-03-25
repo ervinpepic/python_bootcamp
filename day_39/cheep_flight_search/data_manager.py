@@ -1,7 +1,7 @@
 import os
 import requests
 
-SHEETY_GET_ENDPOINT = os.environ.get("SHEETY_GET_ENDPOINT")
+SHEETY_GET_ENDPOINT = ""
 
 
 class DataManager:

@@ -2,9 +2,9 @@ import requests
 import os
 from flight_data import FlightData
 
-TEQUILA_API = os.environ.get("TEQUILA_API")
-TEQUILA_ENDPOINT = "https://tequila-api.kiwi.com"
-TEQUILA_ENDPOINT_SEARCH = "https://tequila-api.kiwi.com/v2/search"
+TEQUILA_API = ""
+TEQUILA_ENDPOINT = ""
+TEQUILA_ENDPOINT_SEARCH = ""
 
 
 class FlightSearch:
@@ -47,16 +47,18 @@ class FlightSearch:
         except IndexError:
             print(f"No flight found for {destination_city_code}.")
             return None
+        else:
+            flight_data = FlightData(
+                price=data["price"],
+                origin_city=data["route"][0]["cityFrom"],
+                origin_airport=data["route"][0]["flyFrom"],
+                destination_city=data["route"][0]["cityTo"],
+                destination_airport=data["route"][0]["flyTo"],
+                out_date=data["route"][0]["local_departure"].split("T")[0],
+                return_date=data["route"][2]["local_departure"].split("T")[0],
+                stop_overs=1,
+                via_city=data["route"][0]["cityTo"]
+            )
+            print(f"{flight_data.destination_city}: £{flight_data.price}")
 
-        flight_data = FlightData(
-            price=data["price"],
-            origin_city=data["route"][0]["cityFrom"],
-            origin_airport=data["route"][0]["flyFrom"],
-            destination_city=data["route"][0]["cityTo"],
-            destination_airport=data["route"][0]["flyTo"],
-            out_date=data["route"][0]["local_departure"].split("T")[0],
-            return_date=data["route"][1]["local_departure"].split("T")[0]
-        )
-        print(f"{flight_data.destination_city}: £{flight_data.price}")
-
-        return flight_data
+            return flight_data
