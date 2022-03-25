@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from email import message
 
 from data_manager import DataManager
 from flight_search import FlightSearch
@@ -12,13 +13,13 @@ flight_search = FlightSearch()
 notification_manager = NotificationManager()
 create_user = CreateUser()
 new_user = create_user.create_user()
+flight_search = FlightSearch()
 
 
 ORIGIN_CITY = "LON"
 
 
 if sheet_data[0]["iataCode"] == "":
-    flight_search = FlightSearch()
     for data in sheet_data:
         data["iataCode"] = flight_search.get_destination_code(data["city"])
     data_manager.destination_data = sheet_data
@@ -36,6 +37,9 @@ for destination in sheet_data:
     )
     if flight is not None:
         if flight.price < destination["lowestPrice"]:
-            notification_manager.send_sms(
-                message=f"Low price alert! Only £{flight.price} to fly from {flight.origin_city}-{flight.origin_airport} to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to {flight.return_date}."
-            )
+            message += f"Low price alert! Only £{flight.price} to fly from {flight.origin_city}-{flight.origin_airport} to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to {flight.return_date}."
+
+            if flight.stop_overs > 0:
+                message += f"\nFlight has {flight.stop_overs} stop over, via {flight.via_city}."
+
+            notification_manager.send_sms(message)
