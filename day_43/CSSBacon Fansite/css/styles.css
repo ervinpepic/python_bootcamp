@@ -1,0 +1,19 @@
+img:hover { 
+    background-color: green;
+}
+
+.bacon { /* class selector */
+    background-color: red;
+}
+
+.broccoli {
+    background-color: aqua;
+}
+
+#heading { /* id selector */
+    color: green;
+}
+
+.circular {
+    border-radius: 50%;
+}
