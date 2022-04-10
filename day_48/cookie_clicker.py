@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 
-services = Service(executable_path="/Users/pepic__ervin/Documents/Development/code_editors_json_settings/terminal/chromedriver")
+services = Service(executable_path="")
 options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(service=services, options=options)
 
