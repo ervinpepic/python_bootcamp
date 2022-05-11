@@ -139,3 +139,4 @@ dmypy.json
 bin/
 /day_16/bin/
 /day_18/bin/
+/day_56/name-card-website/static/assets/sass
