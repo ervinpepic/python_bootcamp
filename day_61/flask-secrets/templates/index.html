@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Home page{% endblock title %} 
+{% block content %}
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Welcome</h1>
+			<p>Are you ready to discover my secret?</p>
+			<a class="btn btn-primary" href="{{ url_for('login') }}">Go to login page</a>
+		</div>
+	</div>
+{% endblock content %}
