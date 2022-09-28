@@ -1,4 +1,4 @@
-from turtle import up
+
 from flask import Flask, render_template, request, redirect, url_for
 # import sqlite3
 from flask_sqlalchemy import SQLAlchemy
