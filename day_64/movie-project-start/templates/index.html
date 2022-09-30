@@ -33,8 +33,8 @@
             {{ movie.description }}
         </p>
 
-        <a href="#" class="button">Update</a>
-        <a href="#" class="button delete-button">Delete</a>
+        <a href="{{ url_for('edit', id=movie.id) }}" class="button">Update</a>
+        <a href="{{ url_for('delete', id=movie.id) }}" class="button delete-button">Delete</a>
         {% endfor %}
       </div>
     </div>

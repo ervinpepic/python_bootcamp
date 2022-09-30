@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 import requests
 
@@ -34,11 +34,38 @@ class Movie(db.Model):
     def __repr__(self):
         return self.title
 
+
+class RateMovieForm(FlaskForm):
+    rating_update = FloatField(label="Edit movie rating", validators=[DataRequired()])
+    review_update = StringField(label="Edit movie review", validators=[DataRequired()])
+    submit = SubmitField("Update movie info")
+
+
 @movie_app.route("/")
 def home():
     movie_list = Movie.query.all()
     return render_template("index.html", movie_list=movie_list)
 
+
+@movie_app.route("/edit", methods=["GET", "POST"])
+def edit():
+    form = RateMovieForm()
+    movie_id = request.args.get('id')
+    movie_to_update = Movie.query.get(movie_id)
+    if form.validate_on_submit():
+        movie_to_update.rating = form.rating_update.data
+        movie_to_update.review = form.review_update.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('edit.html', form=form, movie=movie_to_update)
+
+@movie_app.route("/delete")
+def delete():
+    movie_id = request.args.get('id')
+    movie_to_delete = Movie.query.get(movie_id)
+    db.session.delete(movie_to_delete)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     movie_app.run(debug=True)
