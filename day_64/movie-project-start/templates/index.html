@@ -15,9 +15,9 @@
 <div class="container">
   <h1 class="heading">My Top 10 Movies</h1>
   <p class="description">These are my all time favourite movies.</p>
-   
+  {% for movie in movie_list %}
   <div class="card" >
-    {% for movie in movie_list %}
+    
     <div class="front" style="background-image: url('{{ movie.img_url }}');">
         <p class="large">{{ movie.ranking }}</p>
     </div>
@@ -35,13 +35,14 @@
 
         <a href="{{ url_for('edit', id=movie.id) }}" class="button">Update</a>
         <a href="{{ url_for('delete', id=movie.id) }}" class="button delete-button">Delete</a>
-        {% endfor %}
+        
       </div>
     </div>
   </div>
+  {% endfor %}
 </div>
 <div class="container text-center add">
-<a href="#" class="button">Add Movie</a>
+<a href="{{ url_for('add') }}" class="button">Add Movie</a>
 </div>
 
 {% endblock %}
