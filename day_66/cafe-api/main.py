@@ -1,16 +1,19 @@
 import random
+
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
+#name of the app
 cafe_app = Flask(__name__)
-##Db connection
 
+
+##Db connection
 cafe_app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafes.db"
 cafe_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(cafe_app)
 
-#db table 
 
+#DB table
 class Cafe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), unique=True, nullable=False)
@@ -24,9 +27,11 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    #return name of the cafe or restaurant. We need this when we querying DB.
     def __repr__(self):
         return self.name
 
+    #Here we go through our database tables and get all table names, returned in new dict
     def to_dict(self):
         dictionary = {}
         for column in self.__table__.columns:
@@ -40,27 +45,26 @@ def home():
     
 
 ## HTTP GET - Read Record
-
 @cafe_app.route("/random", methods=["GET"])
 def random_cafe():
-    get_cofies = Cafe.query.all()
-    random_coffee = random.choice(get_cofies)
-    print(type(random_coffee))
-    return jsonify(cafe=random_coffee.to_dict())
+    get_cafes = Cafe.query.all()
+    random_cafe = random.choice(get_cafes)
+    print(type(random_cafe))
+    return jsonify(cafe=random_cafe.to_dict())
 
 
 @cafe_app.route("/all", methods=["GET"])
 def all_cafes():
     all_cafes = Cafe.query.all()
-    cofes = []
+    cafes = []
     for cafe in all_cafes:
-        cofes.append(cafe.to_dict())
-    return jsonify(coffees=cofes)
+        cafes.append(cafe.to_dict())
+    return jsonify(coffees=cafes)
 
 @cafe_app.route("/search", methods=["GET"])
 def search():
-    search_query = request.args["loc"]
-    searched_cafe = db.session.query(Cafe).filter_by(location=search_query).first()
+    search_param = request.args["loc"]
+    searched_cafe = db.session.query(Cafe).filter_by(location=search_param).first()
     if searched_cafe:
         return jsonify(searched_cafe.to_dict())
     else:
@@ -91,7 +95,7 @@ def add():
 def update_cafe_price(cafe_id):
     cofe_to_update = db.session.query(Cafe).filter_by(id=cafe_id).first()
     if cofe_to_update:
-        new_coffee_price = request.args.get('cafe_price')
+        new_coffee_price = request.args.get('coffee_price')
         cofe_to_update.coffee_price = new_coffee_price
         db.session.commit()
         return jsonify(response={"success": "Successuflly updated!"})
