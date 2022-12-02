@@ -104,5 +104,20 @@ def update_cafe_price(cafe_id):
 
 ## HTTP DELETE - Delete Record
 
+@cafe_app.route("/report-closed/<int:cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+    secret_key = request.args.get("api-key")
+    cafe_to_delete = db.session.query(Cafe).filter_by(id=cafe_id).first()
+    if cafe_to_delete:
+        if secret_key == "TopSecretAPIKey":
+            db.session.delete(cafe_to_delete)
+            db.session.commit()
+            return jsonify(response={"success": "Successuflly deleted cafe!"})
+        else: 
+            return jsonify(error={"Forbiden": "You don't have privileges to delete the record!"})
+    else:
+        return jsonify(error={"Not ofund": "Cafe with that id doesn't exist."})
+    
+
 if __name__ == "__main__":
     cafe_app.run(debug=True)
