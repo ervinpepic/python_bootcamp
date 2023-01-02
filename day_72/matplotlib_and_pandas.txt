@@ -12,7 +12,7 @@ reshaped our DataFrame by converting categories to columns using .pivot()
 
 ##############################################################
 
-used .count() and isna().values.any() to look for NaN values in our DataFrame, 
+used .count() and isna() .values .any() to look for NaN values in our DataFrame, 
 which we then replaced using .fillna()
 
 ##############################################################
